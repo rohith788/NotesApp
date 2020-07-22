@@ -1,0 +1,14 @@
+Added 
+- basic cards for displaying notes
+- search bar to add note content
+- addbar header
+
+Modification needed
+- change the searh bar into a card that expands on clicking with multiplei input fields
+
+To-Do
+- connect to Backend Firebase
+- authentication
+- cards generator with Firebase
+- dynamic cards
+- menu bar to display list of notes based on tags

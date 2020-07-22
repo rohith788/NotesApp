@@ -3,14 +3,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import NoteCard from '../card/card.component'
-import NoteInputBar from '../note-input-bar/note-input-bar.component'
+import NoteInputCard from '../note-input-card/note-input-card.component'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    padding: theme.spacing(1),
     flexGrow: 1,
   },
   paper: {
-    padding: theme.spacing(2),
+    // padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
@@ -37,8 +38,8 @@ export default function CardGrid() {
 
   return (
     <div className={classes.root}>
-      <Grid container justify="center" alignItems="center">
-        <NoteInputBar /> 
+      <Grid container justify="center" alignItems="center" >
+        <NoteInputCard /> 
       </Grid>
       <Grid container spacing={1}>
         <Grid container item xs={12} spacing={3}>
