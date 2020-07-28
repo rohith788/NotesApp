@@ -2,21 +2,19 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
-// import Typography from '@material-ui/core/Typography';
-import NoteInputBar from '../note-input-bar/note-input-bar.component'
+import NoteTitleCard from '../note-title-bar/note-title-bar.component'
 import Collapse from '@material-ui/core/Collapse';
-// import IconButton from '@material-ui/core/IconButton';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
+import NoteTextArea from '../note-text-area/note-text-area.component'
+import Button from '@material-ui/core/Button';
 
-
+import {db} from '../../firebase/firebase.utils'
 
 const useStyles = makeStyles({
-  note_text: {
-    
-    },
   root: {
+    '& .MuiTextField-root': {
+      width: '45ch',
+    },
     minWidth: 275,
     paddingBottom: 1,
     boxShadow: "none"
@@ -36,9 +34,6 @@ const useStyles = makeStyles({
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
   },
-//   expandOpen: {
-//     transform: 'rotate(180deg)',
-//   },
 });
 
 export default function NoteInputCard() {
@@ -47,6 +42,20 @@ export default function NoteInputCard() {
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
+    }
+
+    const saveNote = () => {
+      db.collection("notes").doc("note").set({
+        name: "Los Angeles",
+        state: "CA",
+        country: "USA"
+    })
+    .then(function() {
+        console.log("Document successfully written!");
+    })
+    .catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
     }
     return (
       <Card className={classes.root} >
@@ -57,12 +66,17 @@ export default function NoteInputCard() {
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more">
-                <NoteInputBar />
+                <NoteTitleCard title='Title Here' />
             </div>
         </CardActions>
         <div className='note_text'>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <NoteInputBar />
+                <center> 
+                  <NoteTextArea />
+                </center>
+                <right>
+                  <Button onClick={saveNote}>Default</Button>
+                </right>
             </Collapse>
         </div>
       </Card>

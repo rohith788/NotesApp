@@ -6,14 +6,13 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiInputBase-root': {
-      // margin: theme.spacing(1),
       width: '45ch',
       height: '4ch'
     },
   },
 }));
 
-export default function NoteInputBar(pros) {
+export default function NoteTitleCard({title}) {
     const classes = useStyles();
   
     return (
@@ -21,7 +20,7 @@ export default function NoteInputBar(pros) {
         <OutlinedInput
           margin='dense'
           className={classes.margin}
-          defaultValue="Title"
+          defaultValue={title}
           inputProps={{ 'aria-label': 'naked' }}
       />
     </div> 
