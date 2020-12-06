@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -48,15 +48,15 @@ export default function NoteInputCard() {
     setExpanded(!expanded);
   };
 
-  let titleInput = React.createRef();
-
   const saveNote = () => {
     db.collection("notes")
       .add({
         title: title,
         note: note,
       })
-      .then(handleExpandClick);
+      .then(handleExpandClick)
+      .then(setNote(""))
+      .then(setTitle(""));
   };
   return (
     <Card className={classes.root}>
@@ -70,10 +70,10 @@ export default function NoteInputCard() {
           aria-label="show more"
         >
           <TextField
-            ref={titleInput}
             id="Title"
             label="Title"
             variant="outlined"
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
@@ -87,6 +87,7 @@ export default function NoteInputCard() {
               rows={4}
               label="input note here"
               variant="outlined"
+              value={note}
               onChange={(e) => setNote(e.target.value)}
             />
           </center>
