@@ -37,26 +37,9 @@ export default function CardGrid() {
     return () => {
       unsubscribe();
     };
-  }, [db]);
+  }, []);
 
   const classes = useStyles();
-
-  const FormRow = () => {
-    console.log(title.length);
-    if (title.length > 0) {
-      title.map((t) => {
-        return (
-          <Grid item xs={4}>
-            <Paper className={classes.paper}>
-              <NoteCard title={title} noteText={note[title]} />
-            </Paper>
-          </Grid>
-        );
-      });
-    } else {
-      return <div></div>;
-    }
-  };
 
   return (
     <div className={classes.root}>
