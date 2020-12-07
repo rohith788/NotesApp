@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -41,12 +41,26 @@ const useStyles = makeStyles({
 export default function NoteInputCard() {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
+  const [expanded, setExpanded] = useState(false); //expansion state of the card
+  const ref = useRef(null);
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false); //expansion state of the card
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  useEffect(() => {
+    document.addEventListener("click", expandedCard, true);
+    return () => {
+      document.removeEventListener("click", expandedCard, true);
+    };
+  });
+
+  const expandedCard = (event) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setExpanded(!expanded);
+    }
+  }; //compress Input card
+
+  const expandCard = () => {
+    setExpanded(true);
+  }; // Express input card on click
 
   const saveNote = () => {
     db.collection("notes")
@@ -54,10 +68,11 @@ export default function NoteInputCard() {
         title: title,
         note: note,
       })
-      .then(handleExpandClick)
+      .then(expandedCard)
       .then(setNote(""))
       .then(setTitle(""));
-  };
+  }; //save the card data to firestore
+
   return (
     <Card className={classes.root}>
       <CardActions disableSpacing>
@@ -65,7 +80,7 @@ export default function NoteInputCard() {
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
+          onClick={expandCard}
           aria-expanded={expanded}
           aria-label="show more"
         >
@@ -78,7 +93,7 @@ export default function NoteInputCard() {
           />
         </div>
       </CardActions>
-      <div className="note_text">
+      <div className="note_text" ref={ref}>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <center>
             <TextField
@@ -91,9 +106,7 @@ export default function NoteInputCard() {
               onChange={(e) => setNote(e.target.value)}
             />
           </center>
-          <right>
-            <Button onClick={saveNote}>Add</Button>
-          </right>
+          <Button onClick={saveNote}>Add</Button>
         </Collapse>
       </div>
     </Card>

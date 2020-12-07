@@ -29,14 +29,11 @@ export default function NoteCard({ title, noteText }) {
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Typography className={classes.title} gutterBottom>
-          {title}
+        <Typography variant="h6" gutterBottom>
+          <b>{title}</b>
         </Typography>
-        <Typography variant="h5">{noteText}</Typography>
+        <Typography variant="h6">{noteText}</Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
     </Card>
   );
 }
