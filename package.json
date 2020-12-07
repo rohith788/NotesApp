@@ -1,5 +1,4 @@
 {
-  "homepage": "https://stark-cliffs-78799.herokuapp.com/",
   "name": "kepps-clone",
   "version": "0.1.0",
   "private": true,
@@ -21,7 +20,7 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "start": "react-scripts start",
+    "start": "serve -s build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
