@@ -42,21 +42,23 @@ export default function NoteInputCard() {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
   const [expanded, setExpanded] = useState(false); //expansion state of the card
-  const ref = useRef(null);
+  const ref = useRef(null); // reference to tag to expand and compress
   const classes = useStyles();
 
   useEffect(() => {
-    document.addEventListener("click", expandedCard, true);
+    document.addEventListener("click", compressCard, true);
     return () => {
-      document.removeEventListener("click", expandedCard, true);
+      document.removeEventListener("click", compressCard, true);
     };
-  });
+  }); //adding listner on mount for clicks
 
-  const expandedCard = (event) => {
+  const compressCard = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
-      setExpanded(!expanded);
+      if (expanded === true) {
+        setExpanded(false);
+      }
     }
-  }; //compress Input card
+  }; //compress Input card on outside click
 
   const expandCard = () => {
     setExpanded(true);
@@ -68,7 +70,7 @@ export default function NoteInputCard() {
         title: title,
         note: note,
       })
-      .then(expandedCard)
+      .then(compressCard)
       .then(setNote(""))
       .then(setTitle(""));
   }; //save the card data to firestore
