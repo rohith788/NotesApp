@@ -1,4 +1,4 @@
-## Kepps-Clone
+## NotesApp
 
 This is a simple web application that is basically my attempt at cloning the Google Keeps app. It uses React and Firebast at the backend. This project is practice attempt at learning React Hooks.
 
